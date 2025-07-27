@@ -1,4 +1,4 @@
-package br.com.domotest
+package br.com.domotest.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -44,7 +44,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "br
 val appModule = module {
     viewModel { MainViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get()) }
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
 
     single<GenerateUUIDUseCase> {
         GenerateUUIDUseCaseImpl(

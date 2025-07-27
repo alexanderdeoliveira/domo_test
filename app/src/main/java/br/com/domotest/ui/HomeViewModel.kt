@@ -155,16 +155,18 @@ class HomeViewModel(
         _mockEnabled.postValue(enable)
     }
 
-    suspend fun changeText() {
-        if (_mockEnabled.value == true) {
-            getLocalTodo()?.let {
-                _currentTodo.postValue(it)
+    fun changeText() {
+        launch {
+            if (_mockEnabled.value == true) {
+                getLocalTodo()?.let {
+                    _currentTodo.postValue(it)
+                }
+            } else {
+                _currentTodo.postValue(todoList.value?.get(currentTodoPosition))
             }
-        } else {
-            _currentTodo.postValue(todoList.value?.get(currentTodoPosition))
-        }
 
-        currentTodoPosition++
+            currentTodoPosition++
+        }
     }
 
     private suspend fun getLocalTodo(): TodoModel? {
