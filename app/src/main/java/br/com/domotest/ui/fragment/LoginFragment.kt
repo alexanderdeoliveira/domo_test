@@ -1,4 +1,4 @@
-package br.com.domotest.ui
+package br.com.domotest.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.domotest.R
 import br.com.domotest.databinding.FragmentLoginBinding
 import br.com.domotest.extensions.biometricIsAvailable
+import br.com.domotest.ui.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment: Fragment() {

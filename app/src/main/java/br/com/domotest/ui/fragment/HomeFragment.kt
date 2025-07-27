@@ -1,4 +1,4 @@
-package br.com.domotest.ui
+package br.com.domotest.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import br.com.domotest.R
 import br.com.domotest.databinding.FragmentHomeBinding
 import br.com.domotest.model.TodoModel
+import br.com.domotest.ui.viewmodel.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -1,4 +1,4 @@
-package br.com.domotest.ui
+package br.com.domotest.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

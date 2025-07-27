@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.savedstate.SavedState
 import br.com.domotest.R
 import br.com.domotest.databinding.ActivityMainBinding
+import br.com.domotest.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {

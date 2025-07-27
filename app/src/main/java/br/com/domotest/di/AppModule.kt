@@ -31,9 +31,9 @@ import br.com.domotest.repository.TodoRepository
 import br.com.domotest.repository.TodoRepositoryImpl
 import br.com.domotest.repository.LoginRepository
 import br.com.domotest.repository.LoginRepositoryImpl
-import br.com.domotest.ui.HomeViewModel
-import br.com.domotest.ui.LoginViewModel
-import br.com.domotest.ui.MainViewModel
+import br.com.domotest.ui.viewmodel.HomeViewModel
+import br.com.domotest.ui.viewmodel.LoginViewModel
+import br.com.domotest.ui.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel

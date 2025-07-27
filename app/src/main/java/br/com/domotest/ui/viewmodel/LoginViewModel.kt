@@ -1,4 +1,4 @@
-package br.com.domotest.ui
+package br.com.domotest.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
