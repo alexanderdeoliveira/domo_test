@@ -18,6 +18,7 @@ import br.com.domotest.domain.SaveTodoUseCase
 import br.com.domotest.extensions.networkIsConnected
 import br.com.domotest.model.RGBColor
 import br.com.domotest.model.TodoModel
+import br.com.domotest.ui.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -49,9 +50,10 @@ class HomeViewModel(
     fun getTodoList() {
         launch {
             if (applicationContext.networkIsConnected()) {
-                _todoList.postValue(
-                    getTodoListUseCase()
-                )
+                showLoading()
+                val todoList = getTodoListUseCase()
+                hideLoading()
+                _todoList.postValue(todoList)
             }
         }
     }

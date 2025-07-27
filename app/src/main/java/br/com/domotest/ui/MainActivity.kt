@@ -41,20 +41,29 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun setupObservers() {
-        mainViewModel.userLogged.observe(this) { userLogged ->
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        mainViewModel.apply {
+            userLogged.observe(this@MainActivity) { userLogged ->
+                val navHostFragment = supportFragmentManager
+                    .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
-            val graphInflater = navHostFragment.navController.navInflater
-            val navGraph = graphInflater.inflate(R.navigation.nav_main)
+                val graphInflater = navHostFragment.navController.navInflater
+                val navGraph = graphInflater.inflate(R.navigation.nav_main)
 
-            val destination = if (!userLogged) R.id.login else R.id.home
-            navGraph.setStartDestination(destination)
+                val destination = if (!userLogged) R.id.login else R.id.home
+                navGraph.setStartDestination(destination)
 
-            navController = navHostFragment.navController
-            navController.addOnDestinationChangedListener(this)
-            navController.graph = navGraph
-            setupBottomNavigation()
+                navController = navHostFragment.navController
+                navController.addOnDestinationChangedListener(this@MainActivity)
+                navController.graph = navGraph
+                setupBottomNavigation()
+            }
+            loading.observe(this@MainActivity) { loading ->
+                if (loading) {
+                    binding.pbLoading.visibility = View.VISIBLE
+                } else {
+                    binding.pbLoading.visibility = View.GONE
+                }
+            }
         }
     }
 

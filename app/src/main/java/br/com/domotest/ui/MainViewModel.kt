@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.domotest.domain.GetUserIdUseCase
 import br.com.domotest.domain.LogoutUseCase
+import br.com.domotest.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -16,11 +17,13 @@ class MainViewModel(
 
     fun getUserId() {
         launch {
+            showLoading()
             getUserIdUseCase()?.let {
                 _userLogged.postValue(true)
             } ?: run {
                 _userLogged.postValue(false)
             }
+            hideLoading()
         }
     }
 

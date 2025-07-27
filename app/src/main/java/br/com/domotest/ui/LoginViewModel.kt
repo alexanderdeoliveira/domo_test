@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.domotest.domain.GenerateUUIDUseCase
 import br.com.domotest.domain.LoginUseCase
+import br.com.domotest.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -16,7 +17,9 @@ class LoginViewModel(
 
     fun login() {
         launch {
+            showLoading()
             generateUUIDUseCase { userId ->
+                hideLoading()
                 if (userId.isNullOrEmpty()) {
                     _userLogged.postValue(false)
                 } else {
@@ -29,7 +32,9 @@ class LoginViewModel(
 
     private fun saveUserId(userId: String) {
         launch {
+            showLoading()
             loginUseCase(userId)
+            hideLoading()
         }
     }
 }
