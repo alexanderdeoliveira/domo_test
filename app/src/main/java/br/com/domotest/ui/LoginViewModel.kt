@@ -3,25 +3,25 @@ package br.com.domotest.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.domotest.domain.GenerateUUIDUseCase
-import br.com.domotest.domain.SaveUserIdUseCase
+import br.com.domotest.domain.LoginUseCase
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val generateUUIDUseCase: GenerateUUIDUseCase,
-    private val saveUserIdUseCase: SaveUserIdUseCase
+    private val loginUseCase: LoginUseCase
 ): BaseViewModel() {
 
-    private val _loginState = MutableLiveData<Boolean>()
-    val loginState: LiveData<Boolean> = _loginState
+    private val _userLogged = MutableLiveData<Boolean>()
+    val userLogged: LiveData<Boolean> = _userLogged
 
     fun login() {
         launch {
             generateUUIDUseCase { userId ->
                 if (userId.isNullOrEmpty()) {
-                    _loginState.postValue(false)
+                    _userLogged.postValue(false)
                 } else {
                     saveUserId(userId)
-                    _loginState.postValue(true)
+                    _userLogged.postValue(true)
                 }
             }
         }
@@ -29,7 +29,7 @@ class LoginViewModel(
 
     private fun saveUserId(userId: String) {
         launch {
-            saveUserIdUseCase(userId)
+            loginUseCase(userId)
         }
     }
 }

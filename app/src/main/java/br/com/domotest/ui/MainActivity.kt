@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setupObservers()
     }
 
+    private fun logout() {
+        mainViewModel.logout()
+    }
+
     private fun getUserId() {
         mainViewModel.getUserId()
     }
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             val graphInflater = navHostFragment.navController.navInflater
             val navGraph = graphInflater.inflate(R.navigation.nav_main)
 
-            val destination = if (userLogged) R.id.home else R.id.home
+            val destination = if (!userLogged) R.id.login else R.id.home
             navGraph.setStartDestination(destination)
 
             navController = navHostFragment.navController
@@ -77,6 +81,6 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     override fun onDestroy() {
         super.onDestroy()
-        mainViewModel.deleteAllTodos()
+        logout()
     }
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.domotest.R
 import br.com.domotest.databinding.FragmentLoginBinding
+import br.com.domotest.extensions.biometricIsAvailable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment: Fragment() {
@@ -37,13 +38,19 @@ class LoginFragment: Fragment() {
 
     private fun setupListeners() {
         binding.btLogin.setOnClickListener {
-            biometricLogin()
+            if (requireContext().biometricIsAvailable()) {
+                biometricLogin()
+            } else {
+                loginViewModel.login()
+            }
         }
     }
 
     private fun setupObservers() {
-        loginViewModel.loginState.observe(viewLifecycleOwner) { loginState ->
-            findNavController().navigate(R.id.action_login_to_home)
+        loginViewModel.userLogged.observe(viewLifecycleOwner) { userLogged ->
+            if (userLogged) {
+                findNavController().navigate(R.id.action_login_to_home)
+            }
         }
     }
 
@@ -78,9 +85,9 @@ class LoginFragment: Fragment() {
             })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login for my app")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setTitle(getString(R.string.biometric_title))
+            .setSubtitle(getString(R.string.biometric_subtitle))
+            .setNegativeButtonText(getString(R.string.biometric_negative_button_text))
             .build()
 
         biometricPrompt.authenticate(promptInfo)

@@ -1,11 +1,14 @@
 package br.com.domotest.domain
 
+import br.com.domotest.repository.LoginRepository
 import br.com.domotest.repository.TodoRepository
 
-class DeleteAllTodosUseCaseImpl(
+class LogoutUseCaseImpl(
+    private val loginRepository: LoginRepository,
     private val todoRepository: TodoRepository
-): DeleteAllTodosUseCase {
+): LogoutUseCase {
     override suspend fun invoke() {
         todoRepository.deleteAllTodos()
+        loginRepository.logout()
     }
 }

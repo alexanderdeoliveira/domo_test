@@ -2,13 +2,13 @@ package br.com.domotest.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import br.com.domotest.domain.DeleteAllTodosUseCase
 import br.com.domotest.domain.GetUserIdUseCase
+import br.com.domotest.domain.LogoutUseCase
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getUserIdUseCase: GetUserIdUseCase,
-    private val deleteAllTodosUseCase: DeleteAllTodosUseCase
+    private val logoutUseCase: LogoutUseCase
 ): BaseViewModel() {
 
     private val _userLogged = MutableLiveData<Boolean>()
@@ -24,9 +24,9 @@ class MainViewModel(
         }
     }
 
-    fun deleteAllTodos() {
+    fun logout() {
         launch {
-            deleteAllTodosUseCase()
+            logoutUseCase()
         }
     }
 }

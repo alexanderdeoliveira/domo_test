@@ -2,10 +2,10 @@ package br.com.domotest.domain
 
 import br.com.domotest.repository.LoginRepository
 
-class SaveUserIdUseCaseImpl(
+class LoginUseCaseImpl(
     private val loginRepository: LoginRepository
-): SaveUserIdUseCase {
+): LoginUseCase {
     override suspend fun invoke(userId: String) {
-        loginRepository.saveUserId(userId)
+        loginRepository.login(userId)
     }
 }

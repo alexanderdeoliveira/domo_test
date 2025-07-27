@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import br.com.domotest.domain.GetTodoListUseCase
 import br.com.domotest.domain.GetTodoUseCase
 import br.com.domotest.domain.SaveTodoUseCase
+import br.com.domotest.extensions.networkIsConnected
 import br.com.domotest.model.RGBColor
 import br.com.domotest.model.TodoModel
 import kotlinx.coroutines.delay
@@ -24,6 +25,7 @@ import kotlin.random.Random
 const val TEXT_CHANGE_DELAY_IN_MILLIS = 4000L
 
 class HomeViewModel(
+    private val applicationContext: Context,
     private val getTodoListUseCase: GetTodoListUseCase,
     private val saveTodoUseCase: SaveTodoUseCase,
     private val getTodoUseCase: GetTodoUseCase
@@ -46,18 +48,19 @@ class HomeViewModel(
 
     fun getTodoList() {
         launch {
-            _todoList.postValue(
-                getTodoListUseCase()
-            )
+            if (applicationContext.networkIsConnected()) {
+                _todoList.postValue(
+                    getTodoListUseCase()
+                )
+            }
         }
     }
 
     fun startTextViewAnimation(
         bottomNavHeight: Int,
-        context: Context,
         textView: TextView
     ) {
-        val (screenWidth, screenHeight) = getScreenMetrics(context)
+        val (screenWidth, screenHeight) = getScreenMetrics(applicationContext)
         val maxX: Int = screenWidth - textView.width
         val maxY: Int = (screenHeight - bottomNavHeight) - textView.height
 
@@ -89,7 +92,7 @@ class HomeViewModel(
             0f,
             maxY.toFloat()
         ).apply {
-            setDuration(4000) // Adjust duration for speed
+            setDuration(4000)
             repeatMode = ObjectAnimator.REVERSE
             repeatCount = ObjectAnimator.INFINITE
             addListener(object : Animator.AnimatorListener {
@@ -121,10 +124,8 @@ class HomeViewModel(
         } else {
             val displayMetrics = DisplayMetrics()
             val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            @Suppress("DEPRECATION")
             windowManager.defaultDisplay.getMetrics(displayMetrics)
             Pair(displayMetrics.widthPixels, displayMetrics.heightPixels)
-
         }
     }
 
@@ -162,10 +163,16 @@ class HomeViewModel(
                     _currentTodo.postValue(it)
                 }
             } else {
-                _currentTodo.postValue(todoList.value?.get(currentTodoPosition))
+                todoList.value?.let {
+                    val todo = if (it.size > currentTodoPosition) {
+                        it[currentTodoPosition]
+                    } else {
+                        currentTodoPosition = 0
+                        it.first()
+                    }
+                    _currentTodo.postValue(todo)
+                }
             }
-
-            currentTodoPosition++
         }
     }
 

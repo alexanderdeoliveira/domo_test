@@ -11,8 +11,6 @@ import br.com.domotest.datasource.LoginLocalDatasource
 import br.com.domotest.datasource.LoginLocalDatasourceImpl
 import br.com.domotest.datasource.TodoLocalDatasource
 import br.com.domotest.datasource.TodoLocalDatasourceImpl
-import br.com.domotest.domain.DeleteAllTodosUseCase
-import br.com.domotest.domain.DeleteAllTodosUseCaseImpl
 import br.com.domotest.domain.GenerateUUIDUseCase
 import br.com.domotest.domain.GenerateUUIDUseCaseImpl
 import br.com.domotest.domain.GetTodoListUseCase
@@ -23,8 +21,10 @@ import br.com.domotest.domain.GetUserIdUseCase
 import br.com.domotest.domain.GetUserIdUseCaseImpl
 import br.com.domotest.domain.SaveTodoUseCase
 import br.com.domotest.domain.SaveTodoUseCaseImpl
-import br.com.domotest.domain.SaveUserIdUseCase
-import br.com.domotest.domain.SaveUserIdUseCaseImpl
+import br.com.domotest.domain.LoginUseCase
+import br.com.domotest.domain.LoginUseCaseImpl
+import br.com.domotest.domain.LogoutUseCase
+import br.com.domotest.domain.LogoutUseCaseImpl
 import br.com.domotest.network.RetrofitClient
 import br.com.domotest.network.RetrofitApi
 import br.com.domotest.repository.TodoRepository
@@ -44,15 +44,15 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "br
 val appModule = module {
     viewModel { MainViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get()) }
-    viewModel { HomeViewModel(get(), get(), get()) }
+    viewModel { HomeViewModel(androidContext().applicationContext, get(), get(), get()) }
 
     single<GenerateUUIDUseCase> {
         GenerateUUIDUseCaseImpl(
             applicationContext = androidContext()
         )
     }
-    single<SaveUserIdUseCase> {
-        SaveUserIdUseCaseImpl(
+    single<LoginUseCase> {
+        LoginUseCaseImpl(
             loginRepository = get()
         )
     }
@@ -71,13 +71,14 @@ val appModule = module {
             todoRepository = get()
         )
     }
-    single<DeleteAllTodosUseCase> {
-        DeleteAllTodosUseCaseImpl(
+    single<GetTodoUseCase> {
+        GetTodoUseCaseImpl(
             todoRepository = get()
         )
     }
-    single<GetTodoUseCase> {
-        GetTodoUseCaseImpl(
+    single<LogoutUseCase> {
+        LogoutUseCaseImpl(
+            loginRepository = get(),
             todoRepository = get()
         )
     }

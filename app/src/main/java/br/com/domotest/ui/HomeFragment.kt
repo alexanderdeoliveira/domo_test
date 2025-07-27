@@ -37,7 +37,7 @@ class HomeFragment: Fragment() {
 
     private fun setupListeners() {
         binding.apply {
-            tvHome.setOnClickListener {
+            tvMessage.setOnClickListener {
                 homeViewModel.changeText()
             }
             switchMock.setOnCheckedChangeListener { _, isChecked ->
@@ -53,14 +53,13 @@ class HomeFragment: Fragment() {
                     val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
                     homeViewModel.startTextViewAnimation(
                         bottomNav?.height ?: 0,
-                        requireContext(),
-                        binding.tvHome
+                        binding.tvMessage
                     )
                 }
             }
 
             currentTodo.observe(viewLifecycleOwner) { currentTodo ->
-                binding.tvHome.text = when(currentTodo) {
+                binding.tvMessage.text = when(currentTodo) {
                     is TodoModel.TodoLocal -> currentTodo.message
                     is TodoModel.TodoRemote -> currentTodo.message
                 }
@@ -69,7 +68,7 @@ class HomeFragment: Fragment() {
             }
 
             textViewColor.observe(viewLifecycleOwner) { RGBColor ->
-                binding.tvHome.setTextColor(
+                binding.tvMessage.setTextColor(
                     Color.rgb(
                         RGBColor.red,
                         RGBColor.green,

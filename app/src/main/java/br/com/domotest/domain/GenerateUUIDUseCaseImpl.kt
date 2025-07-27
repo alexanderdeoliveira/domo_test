@@ -52,13 +52,11 @@ class GenerateUUIDUseCaseImpl(
                     }
                 }
                 override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-                    // Não é necessário implementar para este caso
                 }
             }
             sensorManager.registerListener(gyroscopeListener, gyroscope, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
-            // Se o giroscópio não estiver disponível, tenta gerar o UUID sem ele
-            lastGyroscopeData = floatArrayOf(0f, 0f, 0f) // Valor padrão
+            lastGyroscopeData = floatArrayOf(0f, 0f, 0f)
             checkAndGenerateUUID(onGenerateFinished)
         }
     }
@@ -93,16 +91,10 @@ class GenerateUUIDUseCaseImpl(
                 "${gyroData[0]},${gyroData[1]},${gyroData[2]}"
 
         val hardwareInfo = "${Build.MANUFACTURER};${Build.MODEL};${Build.VERSION.SDK_INT}"
-
-        // 3. Combinação dos dados
-        // Adiciona um pouco de aleatoriedade inicial para garantir que mesmo dispositivos idênticos
-        // que iniciam com valores de sensor muito próximos, tenham uma chance maior de gerar UUIDs diferentes.
-        // Isso é um "sal" inicial, não uma semente para bibliotecas de UUID.
         val initialEntropy = Random.nextLong().toString()
 
         val combinedString = "$initialEntropy;$sensorDataString;$hardwareInfo"
 
-        // 4. Hashing da string combinada para um identificador de tamanho fixo
         val hashedBytes = MessageDigest.getInstance("SHA-256").digest(combinedString.toByteArray())
         val customUUID = UUID.nameUUIDFromBytes(hashedBytes).toString()
 

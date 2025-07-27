@@ -1,5 +1,5 @@
 package br.com.domotest.domain
 
-interface DeleteAllTodosUseCase {
+interface LogoutUseCase {
     suspend operator fun invoke()
 }

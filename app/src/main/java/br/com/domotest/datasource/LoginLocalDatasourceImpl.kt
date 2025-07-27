@@ -15,12 +15,18 @@ class LoginLocalDatasourceImpl(
     private val userIdPreferencesKey = stringPreferencesKey(USER_ID_KEY)
 
     override suspend fun saveUserId(userId: String) {
-        dataStore.edit { settings ->
-            settings[userIdPreferencesKey] = userId
+        dataStore.edit { userData ->
+            userData[userIdPreferencesKey] = userId
         }
     }
 
     override suspend fun getUserId(): String? {
         return dataStore.data.firstOrNull()?.get(userIdPreferencesKey)
+    }
+
+    override suspend fun clearUserData() {
+        dataStore.edit { userData ->
+            userData.clear()
+        }
     }
 }
