@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Domo Test</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="date_default">DD/MM/YYYY</string>
+    <string name="time_default">HH:MM</string>"
+
+</resources>

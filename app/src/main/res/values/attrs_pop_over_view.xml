@@ -1,0 +1,14 @@
+<resources>
+    <declare-styleable name="PopOverCustomView">
+        <attr name="popupOverType" format="enum">
+            <enum name="dateAndTime" value="0" />
+            <enum name="onlyDate" value="1" />
+            <enum name="onlyTime" value="2" />
+        </attr>
+        <attr name="dayDefault" format="integer"/>
+        <attr name="monthDefault" format="integer"/>
+        <attr name="yearDefault" format="integer"/>
+        <attr name="hourDefault" format="integer"/>
+        <attr name="minuteDefault" format="integer"/>
+    </declare-styleable>
+</resources>
