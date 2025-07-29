@@ -175,6 +175,7 @@ class HomeViewModel(
                     _currentTodo.postValue(todo)
                 }
             }
+            currentTodoPosition++
         }
     }
 
